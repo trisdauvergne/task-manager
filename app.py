@@ -36,6 +36,14 @@ def insert_task():
     return redirect(url_for('get_tasks'))
 
 
+@app.route('/edit_task/<task_id>')
+def edit_task(task_id):
+    _task = mongo.db.tasks.find_one({"_id": ObjectId(task_id)})
+    _categories = mongo.db.categories.find()
+    category_list = [category for category in _categories]
+    return render_template('edittask.html', task=_task, categories=category_list)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',
     port=5000,
